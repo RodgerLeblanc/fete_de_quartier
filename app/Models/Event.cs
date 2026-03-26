@@ -1,11 +1,21 @@
-﻿namespace app.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace app.Models;
+
+public partial class Event
 {
-    public class Event
-    {
-        public required int Id { get; set; }
-        public required string Name { get; set; }
-        public required DateTime Start { get; set; }
-        public required DateTime End { get; set; }
-        public required string Location { get; set; }
-    }
+    public int Id { get; set; }
+
+    public string Name { get; set; } = null!;
+
+    public string Description { get; set; } = null!;
+
+    public DateTime Start { get; set; }
+
+    public DateTime End { get; set; }
+
+    public int LocationId { get; set; }
+
+    public virtual Location Location { get; set; } = null!;
 }
