@@ -1,7 +1,12 @@
+using app.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<FeteDeQuartierContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("Fête de quartier")));
 
 var app = builder.Build();
 
