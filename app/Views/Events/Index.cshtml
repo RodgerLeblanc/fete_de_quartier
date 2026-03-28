@@ -1,0 +1,30 @@
+﻿@model List<app.Models.Event>
+@{
+    ViewData["Title"] = "Évènements";
+}
+<h3>@ViewData["Title"]</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Début</th>
+            <th>Fin</th>
+            <th>Lieu</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach(var row in Model)
+        {
+            <tr onclick="popup(@row.Id)">
+                <td>@row.Name</td>
+                <td>@row.Description</td>
+                <td>@row.Start.ToShortDateString() - @row.Start.ToShortTimeString()</td>
+                <td>@row.End.ToShortDateString() - @row.End.ToShortTimeString()</td>
+                <td>@row.Location.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>

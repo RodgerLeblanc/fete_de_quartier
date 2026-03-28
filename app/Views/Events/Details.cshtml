@@ -1,0 +1,26 @@
+﻿@model app.Models.Event
+@{
+    Layout = "_LayoutPopup";
+    ViewData["Title"] = "Détails";
+}
+
+<div class="popup-container">
+    <h2>@ViewData["Title"]</h2>
+
+    <ul class="details-list">
+        <li>
+            <span class="label">Nom</span>
+            <span class="value">@Model.Name</span>
+        </li>
+        <li>
+            <span class="label">Description</span>
+            <span class="value">@Model.Description</span>
+        </li>
+        <li>
+            <span class="label">Début</span>
+            <span class="value">@Model.Start.ToShortDateString() - @Model.Start.ToShortTimeString()</span>
+        </li>
+    </ul>
+
+    <button onclick="window.close()" class="btn btn-secondary mt-3">Fermer</button>
+</div>
