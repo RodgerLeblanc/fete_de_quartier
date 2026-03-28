@@ -18,7 +18,28 @@ namespace app.Controllers
         {
             var events = await _context.Events.OrderBy(e => e.Start).Include(e => e.Location).ToListAsync();
 
-            return View(events);
+            if (events == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(events);
+            }
+        }
+
+        public IActionResult Details(int id)
+        {
+            var evento = _context.Events.Find(id);
+
+            if (evento == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(evento);
+            }
         }
     }
 }
