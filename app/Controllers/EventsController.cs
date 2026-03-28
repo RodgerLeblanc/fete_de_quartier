@@ -28,9 +28,9 @@ namespace app.Controllers
             }
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var evento = _context.Events.Find(id);
+            var evento = await _context.Events.FindAsync(id);
 
             if (evento == null)
             {
