@@ -1,4 +1,4 @@
-﻿@model List<app.Models.Event>
+﻿@model List<app.Models.EventViewModel>
 @{
     ViewData["Title"] = "Évènements";
 }
@@ -18,13 +18,26 @@
     <tbody>
         @foreach(var row in Model)
         {
-            <tr onclick="popup(@row.Id)">
+            <tr class="clickable-row" data-object='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(row))'>
                 <td>@row.Name</td>
                 <td>@row.Description</td>
                 <td>@row.Start.ToShortDateString() - @row.Start.ToShortTimeString()</td>
                 <td>@row.End.ToShortDateString() - @row.End.ToShortTimeString()</td>
-                <td>@row.Location.Name</td>
+                <td>@row.LocationName</td>
             </tr>
         }
     </tbody>
 </table>
+
+<div class="modal fade" id="detailsModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="detailsModalTitle">Détails</h5>
+            </div>
+            <div class="modal-body">
+                <ul id="detailsList"></ul>
+            </div>
+        </div>
+    </div>
+</div>
