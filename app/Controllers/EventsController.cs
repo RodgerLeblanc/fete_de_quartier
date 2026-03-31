@@ -16,15 +16,19 @@ namespace app.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var events = await _context.Events.OrderBy(e => e.Start).Include(e => e.Location).ToListAsync();
+            var eventViewModels = await _context.Events
+                .OrderBy(e => e.Start)
+                .Include(e => e.Location)
+                .Select(e => new EventViewModel(e))
+                .ToListAsync();
 
-            if (events == null)
+            if (eventViewModels == null)
             {
                 return NotFound();
             }
             else
             {
-                return View(events);
+                return View(eventViewModels);
             }
         }
 
