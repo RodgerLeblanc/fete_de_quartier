@@ -14,14 +14,22 @@ namespace app.Controllers
             _context = context;
         }
 
-        // SQL: SELECT * FROM fete_de_quartier.dbo.events ORDER BY start ASC LEFT JOIN fete_de_quartier.dbo.locations
+        // SQL que je ferais:
+        // SELECT * FROM events LEFT JOIN locations ON events.location_id = locations.id ORDER BY events.start ASC
+        //
+        // SQL réel :
+        // SELECT [e].[id], [e].[description], [e].[end], [e].[location_id], [e].[name], [e].[start], [l].[id], [l].[address], [l].[name]
+        // FROM [events] AS [e]
+        // INNER JOIN [locations] AS [l] ON [e].[location_id] = [l].[id]
+        // ORDER BY [e].[start]
+        //
         // .Select() gère le mappage vers des objets EventViewModel.
         // .ToListAsync() liste les EventViewModel dans une List<EventViewModel> de façon asynchrone.
         public async Task<IActionResult> Index()
         {
-            var eventViewModels = await _context.Events // SELECT * FROM fete_de_quartier.dbo.events
-                .OrderBy(e => e.Start) // ORDER BY start ASC
-                .Include(e => e.Location) // LEFT JOIN fete_de_quartier.dbo.locations
+            var eventViewModels = await _context.Events // SELECT * FROM events
+                .Include(e => e.Location) // LEFT JOIN locations ON events.location_id = locations.id
+                .OrderBy(e => e.Start) // ORDER BY events.start ASC
                 .Select(e => new EventViewModel(e)) // Mape vers des objets EventViewModel.
                 .ToListAsync(); // Liste les EventViewModel dans une List<EventViewModel> de façon asynchrone.
 
