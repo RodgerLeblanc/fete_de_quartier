@@ -6,6 +6,7 @@
     window.open(url, name, options)
 }
 
+// Équivalent à la classe C# EventViewModel
 interface EventViewModel {
     Id: number;
     Name: string;
@@ -16,11 +17,14 @@ interface EventViewModel {
     LocationAddress: string;
 }
 
+// Pour chaque ligne de tableau possédant la classe "clickable-row" ...
 document.querySelectorAll<HTMLTableRowElement>(".clickable-row")
     .forEach((row) => {
 
+        // Gère cliquage
         row.addEventListener("click", () => {
 
+            // Récupère la string JSON représentant l'objet de la ligne
             const jsonString = row.dataset.object;
 
             if (!jsonString) {
@@ -28,6 +32,7 @@ document.querySelectorAll<HTMLTableRowElement>(".clickable-row")
                 return;
             }
 
+            // Peuple l'objet EventViewModel avec l'info du JSON
             let eventViewModel: EventViewModel;
 
             try {
@@ -37,25 +42,37 @@ document.querySelectorAll<HTMLTableRowElement>(".clickable-row")
                 return;
             }
 
-            // Mets le nom de l'évènement comme titre de la page modale
-            const titleElement = document.getElementById("detailsModalTitle");
-
-            if (titleElement) {
-                titleElement.textContent = eventViewModel.Name;
+            // Remplis la page modale
+            var element = document.getElementById("detailsTitle");
+            if (element) {
+                element.textContent = eventViewModel.Name;
             }
 
-            const list = document.getElementById("detailsList") as HTMLUListElement;
-            list.innerHTML = "";
+            element = document.getElementById("detailsLocation");
+            if (element) {
+                element.innerHTML = `<b>Lieu</b> : ${eventViewModel.LocationName}`;
 
-            (Object.keys(eventViewModel) as Array<keyof Event>).forEach((key) => {
-                const li = document.createElement("li");
+                if (eventViewModel.LocationAddress != null) {
+                    element.innerHTML += ` - ${eventViewModel.LocationAddress}`;
+                }
+            }
 
-                const value = eventViewModel[key];
-                li.textContent = `${key}: ${value}`;
+            element = document.getElementById("detailsStart");
+            if (element) {
+                element.innerHTML = `<b>Début</b> : ${eventViewModel.Start}`;
+            }
 
-                list.appendChild(li);
-            });
+            element = document.getElementById("detailsEnd");
+            if (element) {
+                element.innerHTML = `<b>Fin</b> : ${eventViewModel.End}`;
+            }
 
+            element = document.getElementById("detailsDescription");
+            if (element) {
+                element.innerHTML = `<b>Description</b> : ${eventViewModel.Description}`;
+            }
+
+            // Sélectionne la modale
             const modalElement = document.getElementById("detailsModal");
 
             if (!modalElement) {
@@ -63,8 +80,30 @@ document.querySelectorAll<HTMLTableRowElement>(".clickable-row")
                 return;
             }
 
+            // Mets la modale en avant-plan
+            modalElement.classList.add("show");
+            document.body.classList.add("modal-open");
+            modalElement.focus();
+
+            // Cliquer en dehors ferme la modale
+            modalElement.addEventListener("click", (e) => {
+                if (e.target === modalElement) {
+                    modalElement.classList.remove("show");
+                    document.body.classList.remove("modal-open");
+                }
+            });
+
+            // Peser sur escape le ferme la modale
+            modalElement.addEventListener("keydown", (e) => {
+                if (e.key === 'Escape') {
+                    modalElement.classList.remove("show");
+                    document.body.classList.remove("modal-open");
+                }
+            });
+
+            // Affiche ma modale
             const modal = new (window as any).bootstrap.Modal(modalElement);
+
             modal.show();
         });
-
     });
