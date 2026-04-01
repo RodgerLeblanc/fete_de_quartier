@@ -9,3 +9,4 @@
 | Ven 27 | 7 | Intègre TypeScript au projet, Modifie arrangement app, ajoute popup |
 | Sam 28 | 1,5 | Commits, Tuto SCSS |
 | Lun 30 | 4 | Utilise modale avec DTO au lieu de popup avec url distincte
+| Mar 31 | 7,5 | Génère script SQL, Documente requêtes SQL, intègre SASS et joue avec
