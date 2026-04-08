@@ -59,12 +59,16 @@ document.querySelectorAll<HTMLTableRowElement>(".clickable-row")
 
             element = document.getElementById("detailsStart");
             if (element) {
-                element.innerHTML = `<b>Début</b> : ${eventViewModel.Start}`;
+                let date = new Date(eventViewModel.Start);
+
+                element.innerHTML = `<b>Début</b> : ${date.toLocaleDateString() + " à " + date.toLocaleTimeString().split(" min ")[0]}`;
             }
 
             element = document.getElementById("detailsEnd");
             if (element) {
-                element.innerHTML = `<b>Fin</b> : ${eventViewModel.End}`;
+                let date = new Date(eventViewModel.End);
+
+                element.innerHTML = `<b>Fin</b> : ${date.toLocaleDateString() + " à " + date.toLocaleTimeString().split(" min ")[0]}`;
             }
 
             element = document.getElementById("detailsDescription");
