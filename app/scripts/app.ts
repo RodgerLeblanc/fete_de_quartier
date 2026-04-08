@@ -6,6 +6,17 @@
     window.open(url, name, options)
 }
 
+function openModal(modalElement: HTMLElement) {
+    modalElement.classList.add("show");
+    document.body.classList.add("modal-open");
+    modalElement.focus();
+}
+
+function closeModal(modalElement: HTMLElement) {
+    modalElement.classList.remove("show");
+    document.body.classList.remove("modal-open");
+}
+
 // Équivalent à la classe C# EventViewModel
 interface EventViewModel {
     Id: number;
@@ -84,30 +95,22 @@ document.querySelectorAll<HTMLTableRowElement>(".clickable-row")
                 return;
             }
 
-            // Mets la modale en avant-plan
-            modalElement.classList.add("show");
-            document.body.classList.add("modal-open");
-            modalElement.focus();
+
+            // Affiche ma modale
+            openModal(modalElement);
 
             // Cliquer en dehors ferme la modale
             modalElement.addEventListener("click", (e) => {
                 if (e.target === modalElement) {
-                    modalElement.classList.remove("show");
-                    document.body.classList.remove("modal-open");
+                    closeModal(modalElement);
                 }
             });
 
             // Peser sur escape le ferme la modale
             modalElement.addEventListener("keydown", (e) => {
                 if (e.key === 'Escape') {
-                    modalElement.classList.remove("show");
-                    document.body.classList.remove("modal-open");
+                    closeModal(modalElement);
                 }
             });
-
-            // Affiche ma modale
-            const modal = new (window as any).bootstrap.Modal(modalElement);
-
-            modal.show();
         });
     });
