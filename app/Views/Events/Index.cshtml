@@ -8,6 +8,7 @@
     <thead>
         <tr>
             <th>Nom</th>
+            <th>Catégorie</th>
             <th>Lieu</th>
             <th>Date et heure</th>
             @* <th>Fin</th> *@
@@ -20,6 +21,7 @@
         {
             <tr class="clickable-row" data-object='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(row))'>
                 <td>@row.Name</td>
+                <td>@row.CategoryName</td>
                 <td>@row.LocationName</td>
                 <td>@row.Start.ToShortDateString() - @row.Start.ToShortTimeString()</td>
                 @* <td>@row.End.ToShortDateString() - @row.End.ToShortTimeString()</td> *@
@@ -37,6 +39,7 @@
             </div>
             <div class="modal-body">
                 <ul id="detailsList">
+                    <li id="detailsCategoryName"><b>Catégorie</b> : </li>
                     <li id="detailsLocation"><b>Lieu</b> : </li>
                     <li id="detailsStart"><b>Début</b> : </li>
                     <li id="detailsEnd"><b>Fin</b> : </li>

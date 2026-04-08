@@ -18,10 +18,11 @@ namespace app.Controllers
         // SELECT * FROM events LEFT JOIN locations ON events.location_id = locations.id ORDER BY events.start ASC
         //
         // SQL réel :
-        // SELECT [e].[id], [e].[description], [e].[end], [e].[location_id], [e].[name], [e].[start], [l].[id], [l].[address], [l].[name]
-        // FROM [events] AS [e]
+        // SELECT [e].[id], [e].[category_id], [e].[description], [e].[end], [e].[location_id], [e].[name], [e].[start], [l].[id], [l].[address], [l].[name], [c].[id], [c].[name]
+        // FROM[events] AS[e]
         // INNER JOIN [locations] AS [l] ON [e].[location_id] = [l].[id]
-        // ORDER BY [e].[start]
+        // INNER JOIN [categories] AS [c] ON [e].[category_id] = [c].[id]
+        // ORDER BY[e].[start]
         //
         // .Select() gère le mappage vers des objets EventViewModel.
         // .ToListAsync() liste les EventViewModel dans une List<EventViewModel> de façon asynchrone.
@@ -29,6 +30,7 @@ namespace app.Controllers
         {
             var eventViewModels = await _context.Events // SELECT * FROM events
                 .Include(e => e.Location) // LEFT JOIN locations ON events.location_id = locations.id
+                .Include(e => e.Category) // LEFT JOIN categories ON events.category_id = categories.id
                 .OrderBy(e => e.Start) // ORDER BY events.start ASC
                 .Select(e => new EventViewModel(e)) // Mape vers des objets EventViewModel.
                 .ToListAsync(); // Liste les EventViewModel dans une List<EventViewModel> de façon asynchrone.

@@ -13,6 +13,9 @@
 
         public DateTime End { get; set; }
 
+        // Membre de la classe 'Category' aplati
+        public string CategoryName { get; set; } = null!;
+
         // Membres de la classe 'Location' aplatis
         public string LocationName { get; set; } = null!;
 
@@ -25,6 +28,7 @@
             Description = e.Description;
             Start = e.Start;
             End = e.End;
+            CategoryName = e.Category.Name;
             LocationName = e.Location.Name;
             LocationAddress = e.Location.Address;
         }

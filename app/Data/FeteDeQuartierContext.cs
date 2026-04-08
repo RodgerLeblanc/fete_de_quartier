@@ -16,6 +16,8 @@ public partial class FeteDeQuartierContext : DbContext
     {
     }
 
+    public virtual DbSet<Category> Categories { get; set; }
+
     public virtual DbSet<Event> Events { get; set; }
 
     public virtual DbSet<Location> Locations { get; set; }
@@ -25,15 +27,29 @@ public partial class FeteDeQuartierContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__categori__3213E83FE542BC6E");
+
+            entity.ToTable("categories");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("name");
+        });
+
         modelBuilder.Entity<Event>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__events__3213E83F898BB84B");
+            entity.HasKey(e => e.Id).HasName("PK__events__3213E83F7F9FA8F1");
 
             entity.ToTable("events");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CategoryId).HasColumnName("category_id");
             entity.Property(e => e.Description)
-                .HasMaxLength(1000)
+                .HasMaxLength(2000)
                 .IsUnicode(false)
                 .HasColumnName("description");
             entity.Property(e => e.End)
@@ -48,14 +64,18 @@ public partial class FeteDeQuartierContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("start");
 
+            entity.HasOne(d => d.Category).WithMany(p => p.Events)
+                .HasForeignKey(d => d.CategoryId)
+                .HasConstraintName("FK__events__category__4E88ABD4");
+
             entity.HasOne(d => d.Location).WithMany(p => p.Events)
                 .HasForeignKey(d => d.LocationId)
-                .HasConstraintName("FK__events__location__6EF57B66");
+                .HasConstraintName("FK__events__location__4F7CD00D");
         });
 
         modelBuilder.Entity<Location>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__location__3213E83F81BB626D");
+            entity.HasKey(e => e.Id).HasName("PK__location__3213E83F7B2A3417");
 
             entity.ToTable("locations");
 

@@ -17,5 +17,9 @@ public partial class Event
 
     public int LocationId { get; set; }
 
+    public int CategoryId { get; set; }
+
+    public virtual Category Category { get; set; } = null!;
+
     public virtual Location Location { get; set; } = null!;
 }

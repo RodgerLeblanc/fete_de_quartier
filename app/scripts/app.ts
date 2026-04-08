@@ -24,6 +24,7 @@ interface EventViewModel {
     Description: string;
     Start: string;
     End: string;
+    CategoryName: string;
     LocationName: string;
     LocationAddress: string;
 }
@@ -57,6 +58,11 @@ document.querySelectorAll<HTMLTableRowElement>(".clickable-row")
             var element = document.getElementById("detailsTitle");
             if (element) {
                 element.textContent = eventViewModel.Name;
+            }
+
+            element = document.getElementById("detailsCategoryName");
+            if (element) {
+                element.innerHTML = `<b>Catégorie</b> : ${eventViewModel.CategoryName}`;
             }
 
             element = document.getElementById("detailsLocation");
