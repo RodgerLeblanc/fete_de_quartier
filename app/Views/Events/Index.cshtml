@@ -8,10 +8,10 @@
     <thead>
         <tr>
             <th>Nom</th>
-            <th>Description</th>
-            <th>Début</th>
-            <th>Fin</th>
             <th>Lieu</th>
+            <th>Date et heure</th>
+            @* <th>Fin</th> *@
+            @* <th>Description</th> *@
         </tr>
     </thead>
 
@@ -20,10 +20,10 @@
         {
             <tr class="clickable-row" data-object='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(row))'>
                 <td>@row.Name</td>
-                <td>@row.Description</td>
-                <td>@row.Start.ToShortDateString() - @row.Start.ToShortTimeString()</td>
-                <td>@row.End.ToShortDateString() - @row.End.ToShortTimeString()</td>
                 <td>@row.LocationName</td>
+                <td>@row.Start.ToShortDateString() - @row.Start.ToShortTimeString()</td>
+                @* <td>@row.End.ToShortDateString() - @row.End.ToShortTimeString()</td> *@
+                @* <td>@row.Description</td> *@
             </tr>
         }
     </tbody>
